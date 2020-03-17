@@ -427,6 +427,6 @@ fabric.properties
 
 .idea/
 bin/
-obj/
+obj/Debug
 packages/
 Properties/
