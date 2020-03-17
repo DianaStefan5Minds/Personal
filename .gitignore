@@ -426,7 +426,7 @@ fabric.properties
 
 
 .idea/
-.bin/
-.obj/
-.packages/
-.Properties/
+bin/
+obj/
+packages/
+Properties/
