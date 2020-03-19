@@ -73,7 +73,7 @@ namespace Personal
                 var seinVorgesetzter = mitarbeiterImDurchlauf.Vorgesetzter;
                 hierarchie.Add(seinVorgesetzter);
                 mitarbeiterImDurchlauf = seinVorgesetzter;
-                einVorgesetzterexistiert = ! mitarbeiterImDurchlauf.Vorgesetzter.Equals(null);
+                einVorgesetzterexistiert = !mitarbeiterImDurchlauf.Vorgesetzter.Equals(null);
             }
 
             var listeMitVorgesetzten = string.Join("\nVorgesetzter ", hierarchie);
