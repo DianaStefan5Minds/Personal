@@ -1,18 +1,21 @@
-﻿using System;
-
-using Xunit;
-
-namespace MitarbeiterTest
+﻿namespace MitarbeiterTest
 {
-    using System.Net.WebSockets;
+    using Xunit;
+    using Personal;
+    using System;
+
+    using FluentAssertions;
 
     public class Tests
     {
-        private Mitarbeiter winkelmann = new Mitarbeiter("Walter Winkelmann");
-        private Vorgesetzter wichtig = new Vorgesetzter(name = "Waltraud Wichtig");
-        private Vorgesetzter wichtiger = new Vorgesetzter(name = "Hermann Wichtiger");
-        winkelmann.SetzeVorgesetzten(wichtig);
-        wichtig.SetzeVorgesetzten(wichtiger);
+        public static Mitarbeiter winkelmann = new Mitarbeiter("Walter Winkelmann");
+        public static Vorgesetzter wichtig = new Vorgesetzter("Waltraud Wichtig");
+        public static Vorgesetzter wichtiger = new Vorgesetzter("Hermann Wichtiger");
+
+        public static void SetzeVorgesetzte()
+        {
+            winkelmann.SetzeVorgesetzten(wichtig);
+            wichtig.SetzeVorgesetzten(wichtiger);
         }
 
         [Theory]
@@ -22,13 +25,13 @@ namespace MitarbeiterTest
         public void WinkelmannDarfBestellen(int wert, bool allowed)
         {
             //Arrange
-            ErzeugePersonal();
+            SetzeVorgesetzte();
 
             //Act
-            var WinkelmannDarfBestellen = winkelmann.DarfBestellen(wert);
+            var winkelmannDarfBestellen = winkelmann.DarfBestellen(wert);
 
             //Assert
-            WinkelmannDarfBestellen.Should().Equal(allowed);
+            winkelmannDarfBestellen.Should().Equals(allowed);
         }
 
         [Theory]
@@ -37,13 +40,13 @@ namespace MitarbeiterTest
         public void WichtigerDarfBestellen(int wert, bool allowed)
         {
             //Arrange
-            ErzeugePersonal();
+            SetzeVorgesetzte();
 
             //Act
             var WichtigerDarfBestellen = wichtiger.DarfBestellen(wert);
 
             //Assert
-            WichtigerDarfBestellen.Should().Equal(allowed);
+            WichtigerDarfBestellen.Should().Equals(allowed);
         }
 
         public void erweiterePersonalUndÄndereBestelllimit()
@@ -56,30 +59,28 @@ namespace MitarbeiterTest
         public void WinkelmannDarfFür21EuroBestellen_sollTrueZurückgeben()
         {
             //Arrange
-            ErzeugePersonal();
+            SetzeVorgesetzte();
             erweiterePersonalUndÄndereBestelllimit();
 
             //Act
             var winkelmannDarfBestellen = winkelmann.DarfBestellen(30);
 
             //Assert
-            winkelmannDarfBestellen.Should().Equal(true);
+            winkelmannDarfBestellen.Should().Equals(true);
         }
 
         [Fact]
         public void WichtigerDarfFür25EuroBestellen_sollTrueZurückgeben()
         {
             //Arrange
-            ErzeugePersonal();
+            SetzeVorgesetzte();
             erweiterePersonalUndÄndereBestelllimit();
 
             //Act
             var wichtigerDarfBestellen = wichtiger.DarfBestellen(30);
 
             //Assert
-            wichtigerDarfBestellen.Should().Equal(true);
+            wichtigerDarfBestellen.Should().Equals(true);
         }
-
-
     }
 }

@@ -17,10 +17,8 @@ namespace Personal
 
         public Vorgesetzter Vorgesetzter { get; private set; }
 
-        public int SetzeAllgemeinesLimit(int limit = 20)
+        public static int SetzeAllgemeinesLimit(int Bestelllimit = 20)
         {
-            this.Bestelllimit = limit;
-
             return Bestelllimit;
         }
 
