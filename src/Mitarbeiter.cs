@@ -12,6 +12,7 @@ namespace Personal
         }
 
         public string Name { get; set; }
+        
         public int Bestelllimit { get; set; }
         public Vorgesetzter Vorgesetzter { get; set; }
 
