@@ -11,20 +11,24 @@ namespace Personal
             this.Vorgesetzter = SetzeVorgesetzten();
         }
 
-        public string Name { get; set; }
-        
-        public int Bestelllimit { get; set; }
-        
-        public Vorgesetzter Vorgesetzter { get; set; }
+        public string Name { get; }
 
-        public void SetzeAllgemeinesLimit(int limit = 20)
+        public int Bestelllimit { get; protected set; }
+
+        public Vorgesetzter Vorgesetzter { get; private set; }
+
+        public int SetzeAllgemeinesLimit(int limit = 20)
         {
             this.Bestelllimit = limit;
+
+            return Bestelllimit;
         }
 
-        public void SetzeVorgesetzten(Vorgesetzter meinVorgesetzter = null)
+        public Vorgesetzter SetzeVorgesetzten(Vorgesetzter meinVorgesetzter = null)
         {
             this.Vorgesetzter = meinVorgesetzter;
+
+            return Vorgesetzter;
         }
 
         public bool DarfBestellen(int bestellhöhe)
@@ -69,7 +73,7 @@ namespace Personal
                 var seinVorgesetzter = mitarbeiterImDurchlauf.Vorgesetzter;
                 hierarchie.Add(seinVorgesetzter);
                 mitarbeiterImDurchlauf = seinVorgesetzter;
-                einVorgesetzterexistiert = mitarbeiterImDurchlauf.Vorgesetzter.Equals(!null);
+                einVorgesetzterexistiert = ! mitarbeiterImDurchlauf.Vorgesetzter.Equals(null);
             }
 
             var listeMitVorgesetzten = string.Join("\nVorgesetzter ", hierarchie);
