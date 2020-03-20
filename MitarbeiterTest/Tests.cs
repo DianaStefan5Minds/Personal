@@ -3,7 +3,8 @@
     using System;
 
     using Xunit;
-    using Personal;
+    using Mitarbeiter;
+
     using FluentAssertions;
 
     public class Tests

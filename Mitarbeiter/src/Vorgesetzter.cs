@@ -1,4 +1,4 @@
-namespace Personal
+namespace Mitarbeiter
 {
     public class Vorgesetzter : Mitarbeiter
     {

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personal", "Personal.csproj", "{47393590-1686-4E2A-91A8-3A0ECC5A9F4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mitarbeiter", "Mitarbeiter\Mitarbeiter.csproj", "{47393590-1686-4E2A-91A8-3A0ECC5A9F4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MitarbeiterTest", "MitarbeiterTest\MitarbeiterTest.csproj", "{C2346E82-437B-4184-AD00-280B8F72A38B}"
 EndProject

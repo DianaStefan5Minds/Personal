@@ -1,4 +1,4 @@
-﻿namespace Personal
+﻿namespace Mitarbeiter
 {
     using System;
     using System.Collections.Generic;
