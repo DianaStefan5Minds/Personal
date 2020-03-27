@@ -1,6 +1,7 @@
 namespace Mitarbeiter
 {
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
     using Microsoft.Win32.SafeHandles;
 
@@ -9,9 +10,7 @@ namespace Mitarbeiter
         public Mitarbeiter(string name)
         {
             this.Name = name;
-            Mitarbeiter.Bestelllimit = SetzeAllgemeinesLimit();
-            this.Vorgesetzter = SetzeVorgesetzten();
-            this.Typ = "Mitarbeiter";
+            this.Vorgesetzter = new Vorgesetzter(null);
         }
 
         public string Name { get; }
@@ -22,39 +21,36 @@ namespace Mitarbeiter
 
         public Vorgesetzter Vorgesetzter { get; private set; }
 
-        public static int SetzeAllgemeinesLimit(int bestelllimit = 20)
+        public static void SetzeAllgemeinesLimit(int bestelllimit = 20)
         {
-            return bestelllimit;
+            Mitarbeiter.Bestelllimit = bestelllimit;
         }
 
-        public Vorgesetzter SetzeVorgesetzten(Vorgesetzter meinVorgesetzter = null)
+        public void SetzeVorgesetzten(Vorgesetzter meinVorgesetzter = null)
         {
             this.Vorgesetzter = meinVorgesetzter;
-
-            return Vorgesetzter;
         }
 
         public bool DarfBestellen(int bestellhöhe)
         {
-            var mitarbeiterÜberschreitetBestelllimitNicht = bestellhöhe <= Mitarbeiter.Bestelllimit;
+            var darfBestellen = bestellhöhe <= Mitarbeiter.Bestelllimit;
 
-            return mitarbeiterÜberschreitetBestelllimitNicht;
+            return darfBestellen;
         }
 
         public string gibInfo()
         {
-            var stringPersonalart = string.Format("Ich bin {0}, ", this.Typ);
+            var stringPersonalart =  "Ich bin Mitarbeiter, ";
             var stringName = string.Format("Name {0}. ", this.Name);
-            var stringVorgesetzter = string.Format("Mein Vorgesetzter ist {0}. ", this.Vorgesetzter.Name);
+            var stringVorgesetzter = "";
             var stringBestelllimit = string.Format("Mein Bestelllimit ist {0} EUR.", Mitarbeiter.Bestelllimit);
 
-            var hatKeinenVorgesetzten = this.Vorgesetzter.Equals(null);
-            var istSelbstVorgesetzter = this.GetType().Equals("Vorgestzter");
-            var istFreierMitarbeiter = hatKeinenVorgesetzten && !istSelbstVorgesetzter;
+            var hatEinenVorgesetzten = ! this.Vorgesetzter.Name.Equals(null);
+            var istFreierMitarbeiter = ! hatEinenVorgesetzten;
 
-            if (hatKeinenVorgesetzten)
+            if (hatEinenVorgesetzten)
             {
-                stringVorgesetzter = "";
+                stringVorgesetzter = string.Format("Mein Vorgesetzter ist {0}. ", this.Vorgesetzter.Name);
             }
 
             if (istFreierMitarbeiter)
@@ -67,7 +63,7 @@ namespace Mitarbeiter
 
         public string gibHierarchie()
         {
-            var einVorgesetzterexistiert = !this.Vorgesetzter.Equals(null);
+            var einVorgesetzterexistiert = !this.Vorgesetzter.Name.Equals(null);
             var mitarbeiterImDurchlauf = this;
             var hierarchie = new List<string>();
 
@@ -76,7 +72,7 @@ namespace Mitarbeiter
                 var seinVorgesetzter = mitarbeiterImDurchlauf.Vorgesetzter;
                 hierarchie.Add(seinVorgesetzter.Name);
                 mitarbeiterImDurchlauf = seinVorgesetzter;
-                einVorgesetzterexistiert = !mitarbeiterImDurchlauf.Vorgesetzter.Equals(null);
+                einVorgesetzterexistiert = ! mitarbeiterImDurchlauf.Vorgesetzter.Name.Equals(null);
             }
 
             var listeMitVorgesetzten = string.Join("\nVorgesetzter ", hierarchie);

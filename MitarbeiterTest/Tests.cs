@@ -12,6 +12,7 @@
         public Mitarbeiter winkelmann;
         public Vorgesetzter wichtig;
         public Vorgesetzter wichtiger;
+        public Mitarbeiter winzig;
 
         public void Arrange()
         {
@@ -21,6 +22,7 @@
 
             this.winkelmann.SetzeVorgesetzten(wichtig);
             this.wichtig.SetzeVorgesetzten(wichtiger);
+            Mitarbeiter.SetzeAllgemeinesLimit();
         }
 
         [Theory]
@@ -58,8 +60,8 @@
         {
             Arrange();
             var winzig = new Mitarbeiter("Willi Winzig");
-            Mitarbeiter.Bestelllimit = Mitarbeiter.SetzeAllgemeinesLimit(30);
-
+            Mitarbeiter.SetzeAllgemeinesLimit(30);
+            Vorgesetzter.SetzeAllgemeinesLimit(30);
         }
 
         [Theory]
@@ -121,7 +123,7 @@
         }
 
         [Fact]
-        public void InfotextfürWichtigStimmt()
+        public void InfotextvonWichtigStimmt()
         {
             //Arrange
             Arrange4();
@@ -229,15 +231,22 @@
             eigentlicheVorgesetzte.Should().Be(erwarteteVorgesetzte);
         }
 
+        public void Arrange6()
+        {
+            Arrange5();
+            var winzig = new Mitarbeiter("Willi Winzig");
+            Mitarbeiter.SetzeAllgemeinesLimit();
+        }
+
         [Fact]
         public void InfotextVonWinzigStimmt()
         {
             //Arrange
-            Arrange5();
+            Arrange6();
             var erwarteterInfotext = "Ich bin freier Mitarbeiter, Name Willi Winzig. Mein Bestelllimit ist 30 EUR.";
 
             //Act
-            var eigentlicherInfotest = winkelmann.gibInfo();
+            var eigentlicherInfotest = winzig.gibInfo();
 
             //Assert
             eigentlicherInfotest.Should().Be(erwarteterInfotext);
@@ -247,7 +256,7 @@
         public void HierarchieVonWinzigStimmt()
         {
             //Arrange
-            Arrange5();
+            Arrange6();
             var erwarteterInfotext = "freier Mitarbeiter Willi Winzig";
 
             //Act
