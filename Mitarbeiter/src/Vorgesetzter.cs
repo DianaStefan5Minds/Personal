@@ -14,14 +14,14 @@ namespace Mitarbeiter
            this.eigenesBestelllimit = eigenesBestelllimit;
         }
 
-        public bool DarfBestellen(int bestellhöhe)
+        public override bool DarfBestellen(int bestellhöhe)
         {
             var darfBestellen = bestellhöhe <= this.eigenesBestelllimit;
 
             return darfBestellen;
         }
 
-        public string gibInfo()
+        public override string gibInfo()
         {
             var stringPersonalart =  "Ich bin Vorgesetzter, ";
             var stringName = string.Format("Name {0}. ", this.Name);
