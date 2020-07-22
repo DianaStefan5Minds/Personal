@@ -1,4 +1,4 @@
-﻿namespace Personal
+﻿namespace Mitarbeiter
 {
     using System;
     using System.Collections.Generic;
@@ -10,6 +10,7 @@
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("Hello");
         }
     }
 }
